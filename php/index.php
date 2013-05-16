@@ -5,7 +5,7 @@ if ($mysqli->connect_errno) {
    // echo "Failed to connect to MySQL: " . $mysqli->connect_error;
 }
 $sql = "SELECT `Post`.`id`, `Post`.`title`, `Post`.`body`, `Post`.`created`, `Post`.`modified` FROM `test`.`posts` AS `Post` WHERE 1 = 1";
-$posts = mysqli_fetch_all($mysqli->query($sql),MYSQLI_ASSOC);
+$result = $mysqli->query($sql);
 //print_r($posts);
 ?>
 <?php
@@ -18,14 +18,14 @@ include("header.php");
         <th>Title</th>
         <th>Created</th>
     </tr>
-    <?php foreach ($posts as $post): ?>
+    <?php while($post = $result->fetch_assoc()): ?>
     <tr>
         <td><?php echo $post['id']; ?></td>
         <td><a href="/posts/view/<?php echo $post['id'];?>"><?php echo $post['title'];?></a>
         </td>
         <td><?php echo $post['created']; ?></td>
     </tr>
-    <?php endforeach; ?> 
+    <?php endwhile; ?> 
     <?php unset($post) ?>
 </table>
 <?php
